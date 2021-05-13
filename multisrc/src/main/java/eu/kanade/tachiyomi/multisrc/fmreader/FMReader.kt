@@ -209,7 +209,7 @@ abstract class FMReader(
 
     open val chapterUrlSelector = "a"
 
-    open val chapterTimeSelector = "time, .chapter-time"
+    open val chapterTimeSelector = "time, .chapter-time, .publishedDate"
 
     open val chapterNameAttrSelector = "title"
 
@@ -283,12 +283,23 @@ abstract class FMReader(
             }
         }
     }
+    /*
 
     open val pageListImageSelector = "img.chapter-img"
 
     override fun pageListParse(document: Document): List<Page> {
         return document.select(pageListImageSelector).mapIndexed { i, img ->
             Page(i, document.location(), img.imgAttr())
+        }
+    }
+
+     */
+
+    open val pageListImageSelector = "div.chapter-content"
+
+    override fun pageListParse(document: Document): List<Page> {
+        return document.select(pageListImageSelector).mapIndexed { i, canvas ->
+            Page(i, document.location(), canvas.imgAttr())
         }
     }
 
